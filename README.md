@@ -54,7 +54,7 @@
 
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
-| post_code      | integer    | null: false                    |
+| post_code      | string     | null: false                    |
 | area_id        | integer    | null: false                    |
 | municipality   | string     | null: false                    |
 | street_address | string     | null: false                    |
