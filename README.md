@@ -2,11 +2,13 @@
 
 ## users テーブル
 
-| Column             | Type   | Options     |
-| ------------------ | ------ | ----------- |
-| name               | string | null: false |
-| email              | string | null: false, unique: true |
-| encrypted_password | string | null: false |
+| Column             | Type     | Options                   |
+| ------------------ | -------- | ------------------------- |
+| nickname           | string   | null: false               |
+| email              | string   | null: false, unique: true |
+| encrypted_password | string   | null: false               |
+| fullname           | string   | null: false               |
+| date_of_birth      | integer  | null: false               |
 
 ### Association
 
