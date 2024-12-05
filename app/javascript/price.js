@@ -1,31 +1,26 @@
-document.addEventListener("turbolinks:load", () => {
-  console.log("JavaScript loaded"); // この行を追加
-
+const calculateProfit = () => {
   const priceInput = document.getElementById("item-price");
-  const taxDisplay = document.getElementById("add-tax-price");
-  const profitDisplay = document.getElementById("profit");
+  const addTaxDom = document.getElementById("add-tax-price");
+  const profitDom = document.getElementById("profit");
 
   if (priceInput) {
-    console.log("Price input element found"); // この行を追加
-
     priceInput.addEventListener("input", () => {
-      const price = parseInt(priceInput.value, 10);
-      console.log(`Input price: ${price}`); // この行を追加
+      const inputValue = parseFloat(priceInput.value);
 
-      if (!isNaN(price) && price >= 300 && price <= 9999999) {
-        const tax = Math.floor(price * 0.1);
-        const profit = price - tax;
+      if (!isNaN(inputValue) && inputValue > 0) {
+        const tax = Math.floor(inputValue * 0.1);
+        const profit = inputValue - tax;
 
-        console.log(`Tax: ${tax}, Profit: ${profit}`); // この行を追加
-
-        taxDisplay.textContent = tax;
-        profitDisplay.textContent = profit;
+        addTaxDom.innerHTML = tax.toString();
+        profitDom.innerHTML = profit.toString();
       } else {
-        taxDisplay.textContent = "";
-        profitDisplay.textContent = "";
+        addTaxDom.innerHTML = "";
+        profitDom.innerHTML = "";
       }
     });
-  } else {
-    console.log("Price input element not found"); // この行を追加
   }
-});
+};
+
+window.addEventListener("load", calculateProfit);
+
+
