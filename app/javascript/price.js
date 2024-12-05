@@ -9,7 +9,7 @@ const calculateProfit = () => {
 
       if (!isNaN(inputValue) && inputValue > 0) {
         const tax = Math.floor(inputValue * 0.1);
-        const profit = inputValue - tax;
+        const profit = Math.floor(inputValue - tax);
 
         addTaxDom.innerHTML = tax.toString();
         profitDom.innerHTML = profit.toString();
@@ -23,4 +23,4 @@ const calculateProfit = () => {
 
 window.addEventListener("load", calculateProfit);
 
-
+document.addEventListener("turbolinks:load", calculateProfit);
