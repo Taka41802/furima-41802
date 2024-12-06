@@ -84,6 +84,13 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include('User must exist')
       end
+
+      # 価格に半角数値以外の文字が含まれている場合登録できない
+      it '価格に半角数値以外の文字が含まれている場合は保存できない' do
+        @item.price = '300a'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
     end
   end
 end
