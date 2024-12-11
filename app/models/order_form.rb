@@ -11,11 +11,12 @@ class OrderForm
     validates :area_id, numericality: { other_than: 0, message: "can't be blank" }
     validates :municipality
     validates :street_address
-    validates :phone_number, format: { with: /\A[0-9]{11}\z/, message: 'is invalid' }
-    validates :token
+    validates :phone_number, format: { with: /\A[0-9]{10,11}\z/, message: 'is invalid' }
   end
 
   def save
+    return false unless valid?
+
     # Orderを保存し、そのIDをもとにAddressを保存する
     order = Order.create(user_id: user_id, item_id: item_id)
     Address.create(post_code: post_code, area_id: area_id, municipality: municipality, street_address: street_address,
