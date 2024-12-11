@@ -1,6 +1,7 @@
 class OrderForm
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_code, :area_id, :municipality, :street_address, :building_name, :phone_number, :price, :user_id, :item_id, :token
+  attr_accessor :post_code, :area_id, :municipality, :street_address, :building_name, :phone_number, :price,
+                :user_id, :item_id, :token
 
   # バリデーションの追加
   with_options presence: true do
@@ -17,5 +18,7 @@ class OrderForm
   def save
     # Orderを保存し、そのIDをもとにAddressを保存する
     order = Order.create(user_id: user_id, item_id: item_id)
-    Address.create(post_code: post_code, area_id: area_id, municipality: municipality, street_address: street_address, building_name: building_name, phone_number: phone_number, order_id: order.id)
+    Address.create(post_code: post_code, area_id: area_id, municipality: municipality, street_address: street_address,
+                   building_name: building_name, phone_number: phone_number, order_id: order.id)
   end
+end
