@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_order_sold, only: [:index, :create]
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @item = Item.find(params[:item_id])
@@ -30,5 +31,12 @@ class OrdersController < ApplicationController
     params.require(:order_form).permit(:post_code, :area_id, :municipality, :street_address, :building_name, :phone_number).merge(
       user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
+  end
+
+  def check_order_sold
+    @item = Item.find(params[:item_id])
+    return unless @item.orders.present? || @item.user_id == current_user.id
+
+    redirect_to root_path, alert: 'この商品は購入できません。'
   end
 end
