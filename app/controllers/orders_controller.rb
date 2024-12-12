@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
 
   def check_order_sold
     @item = Item.find(params[:item_id])
-    return unless @item.orders.present? || @item.user_id == current_user.id
+    return unless @item.order.present? || @item.user_id == current_user.id
 
     redirect_to root_path, alert: 'この商品は購入できません。'
   end

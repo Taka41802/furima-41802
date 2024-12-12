@@ -60,7 +60,7 @@ class ItemsController < ApplicationController
 
   def check_item_sold
     @item = Item.find(params[:id])
-    return unless @item.orders.present?
+    return unless @item.order.present?
 
     redirect_to root_path, alert: 'この商品は売却済みです。編集できません。'
   end
