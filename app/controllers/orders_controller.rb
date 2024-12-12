@@ -1,14 +1,13 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :check_order_sold, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_form_params)
     if @order_form.valid?
       Payjp.api_key = ENV['PAYJP_SECRET_KEY']
@@ -31,6 +30,10 @@ class OrdersController < ApplicationController
     params.require(:order_form).permit(:post_code, :area_id, :municipality, :street_address, :building_name, :phone_number).merge(
       user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
   def check_order_sold
