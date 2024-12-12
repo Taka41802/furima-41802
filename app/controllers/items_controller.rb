@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :show, :destroy]
   before_action :authenticate_user!, only: [:new, :update, :edit, :destroy]
   before_action :move_to_index, only: [:edit, :update, :destroy]
+  before_action :check_item_sold, only: [:edit, :update]
 
   def index
     @items = Item.order('created_at DESC')
@@ -55,5 +56,12 @@ class ItemsController < ApplicationController
     return if user_signed_in? && current_user.id == @item.user_id
 
     redirect_to action: :index
+  end
+
+  def check_item_sold
+    @item = Item.find(params[:id])
+    return unless @item.orders.present?
+
+    redirect_to root_path, alert: 'この商品は売却済みです。編集できません。'
   end
 end
